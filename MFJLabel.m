@@ -276,11 +276,17 @@ NSString * const MFJLabelDateAttributeName        = @"MFJLabelDateAttributeName"
     NSRange glyphRange = [layoutManager glyphRangeForTextContainer:textContainer];
 
     rect.origin.y = CGRectGetMidY(self.bounds) - rect.size.height/2;
+
+    [layoutManager drawBackgroundForGlyphRange:glyphRange atPoint:rect.origin];
     [layoutManager drawGlyphsForGlyphRange:glyphRange atPoint:rect.origin];
 
-    if (self.linkRange.location != NSNotFound)
-    {
-        [layoutManager drawBackgroundForGlyphRange:self.linkRange atPoint:rect.origin];
+    if (self.linkRange.location != NSNotFound) {
+        [layoutManager drawUnderlineForGlyphRange:self.linkRange
+                                    underlineType:NSUnderlineStyleSingle
+                                   baselineOffset: 0
+                                 lineFragmentRect: rect
+                           lineFragmentGlyphRange: self.linkRange
+                                  containerOrigin: rect.origin];
     }
 }
 
